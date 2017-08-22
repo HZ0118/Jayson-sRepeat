@@ -21,14 +21,16 @@
             <ul class="nav navbar-nav">
                 <li @if(title == "Home"){class="active"}><a href="@routes.HomeController.index()">Home</a></li>
                 <li @if(title == "Flights"){class="active"}>
-                @if(user != null) {
-                    <a href="@routes.CustomerController.flights()">Flights</a>
-                } else{
-                    <a href="@routes.HomeController.flights()">Flights</a>
-                }
+                    @if(user != null) {
+                        <a href="@routes.CustomerController.flights()">Flights</a>
+                    } else{
+                        <a href="@routes.HomeController.flights()">Flights</a>
+                    }
                 </li>
-                <li>
-                    <a href="@routes.ShoppingController.showBasket()"><span class="glyphicon glyphicon-shopping-cart"></span></a>
+                <li @if(title =="MyBooking"){class="active"}>
+                    @if(user != null) {
+                        <a href="@routes.ShoppingController.showBasket()">My Bookings</a>
+                    }
                 </li>
                 <li @if(title == "Login"){class="active"}>
                 @if(user != null){
