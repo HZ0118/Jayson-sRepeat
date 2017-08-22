@@ -4,12 +4,12 @@ import com.avaje.ebean.Model;
 import com.zaxxer.hikari.util.FastList;
 import models.FlightSchedule;
 import models.users.Customer;
+import org.springframework.core.annotation.Order;
 
 import javax.persistence.*;
 import java.util.Iterator;
 import java.util.List;
 
-// Product entity managed by Ebean
 @Entity
 public class Basket extends Model {
 
@@ -22,17 +22,11 @@ public class Basket extends Model {
     @OneToOne
     private Customer customer;
 
-    // Default constructor
     public  Basket() {
     }
 
     public void addFlight(FlightSchedule f) {
-
         boolean itemFound = false;
-        // Check if product already in this basket
-        // Check if item in basket
-        // Find orderitem with this product
-        // if found increment quantity
         for (OrderItem i : basketItems) {
             if (i.getFlight().getFlight_id() == f.getFlight_id()) {
                 i.increaseQty();
@@ -41,9 +35,7 @@ public class Basket extends Model {
             }
         }
         if (itemFound == false) {
-            // Add orderItem to list
             OrderItem newItem = new OrderItem(f);
-            // Add to items
             basketItems.add(newItem);
         }
     }
@@ -73,7 +65,9 @@ public class Basket extends Model {
         }
     }
 
-
+    public void cancelOrder(OrderItem item){
+        item.delete();
+    }
 
     public void removeAllItems() {
         for(OrderItem i: this.basketItems) {

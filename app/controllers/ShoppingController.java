@@ -55,25 +55,15 @@ public class ShoppingController extends Controller {
 
     @Transactional
     public Result addToBasket(Long id) {
-
-        // Find the product
         FlightSchedule f = FlightSchedule.find.byId(id);
-
-        // Get basket for logged in customer
         Customer customer = (Customer)User.getUserById(session().get("email"));
-
-        // Check if item in basket
         if (customer.getBasket() == null) {
-            // If no basket, create one
             customer.setBasket(new Basket());
             customer.getBasket().setCustomer(customer);
             customer.update();
         }
-        // Add product to the basket and save
         customer.getBasket().addFlight(f);
         customer.update();
-
-        // Show the basket contents
         return ok(basket.render(customer));
     }
 
@@ -114,6 +104,15 @@ public class ShoppingController extends Controller {
         c.getBasket().removeAllItems();
         c.getBasket().update();
 
+        return ok(basket.render(c));
+    }
+
+    @Transactional
+    public Result cancelBooking(Long id){
+        OrderItem item = OrderItem.find.byId(id);
+        Customer c = getCurrentUser();
+        c.getBasket().cancelOrder(item);
+        c.getBasket().update();
         return ok(basket.render(c));
     }
 

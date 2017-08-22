@@ -35,6 +35,8 @@
               <td>@i.getQuantity()</td>
               <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
               <td><a href="@routes.ShoppingController.addOne(i.getId)"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
+              <td><a href="@routes.ShoppingController.cancelBooking(i.getId)" class="btn btn-danger btn-sm" onclick="return confirmDel();">
+                <span class="glyphicon glyphicon-trash"></span>Cancel Booking</a><td>
             </tr>
           }<!-- End of For loop -->
         }
