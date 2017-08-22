@@ -1,0 +1,31 @@
+@(flights: List[models.FlightSchedule], user: models.users.User)
+
+@main("Flights", user){
+  <table class="table table-bordered table-hover table-condensed">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Start Point</th>
+        <th>Destination</th>
+        <th>Destination City</th>
+        <th>Departure Date</th>
+        <th>Total Seats</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+
+    <tbody>
+    @for(f <- flights){
+      <tr>
+        <td class="numeric">@f.getFlight_id</td>
+        <td>@f.getStart</td>
+        <td>@f.getDestination</td>
+        <td>@f.getDest_city</td>
+        <td>@f.getDeparture_date</td>
+        <td class="numeric">@f.getSeats</td>
+        <td class="numeric">&euro; @("%.2f".format(f.getPrice))</td>
+      </tr>
+    }
+    </tbody>
+  </table>
+}
