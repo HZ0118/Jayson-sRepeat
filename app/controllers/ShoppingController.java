@@ -3,6 +3,8 @@ package controllers;
 import models.shopping.*;
 import models.users.Customer;
 import models.users.User;
+import play.data.Form;
+import play.data.FormFactory;
 import play.db.ebean.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -11,11 +13,19 @@ import play.mvc.With;
 import views.html.*;
 import models.*;
 
+import javax.inject.Inject;
 
 
 @Security.Authenticated(Secured.class)
 @With(AuthCustomer.class)
 public class ShoppingController extends Controller {
+
+    private FormFactory formFactory;
+
+    @Inject
+    public ShoppingController(FormFactory f){
+        this.formFactory = f;
+    }
 
     // Get a user - if logged in email will be set in the session
     private Customer getCurrentUser() {
@@ -48,21 +58,19 @@ public class ShoppingController extends Controller {
 
     @Transactional
     public Result showBasket(){
-
         return ok(basket.render(getCurrentUser()));
-
     }
 
     @Transactional
     public Result addToBasket(Long id) {
-        FlightSchedule f = FlightSchedule.find.byId(id);
+        Booking b = Booking.find.byId(id);
         Customer customer = (Customer)User.getUserById(session().get("email"));
         if (customer.getBasket() == null) {
             customer.setBasket(new Basket());
             customer.getBasket().setCustomer(customer);
             customer.update();
         }
-        customer.getBasket().addFlight(f);
+        customer.getBasket().addBooking(b);
         customer.update();
         return ok(basket.render(customer));
     }
@@ -115,5 +123,27 @@ public class ShoppingController extends Controller {
         c.getBasket().update();
         return ok(basket.render(c));
     }
+
+    public Result addBooking(Long id){
+        FlightSchedule f = FlightSchedule.find.byId(id);
+        Form<Booking> addBookingForm = formFactory.form(Booking.class);
+        return ok(booking.render(addBookingForm, User.getUserById(session().get("enail")), f));
+    }
+
+    public Result addBookingForm(Long id){
+        FlightSchedule f = FlightSchedule.find.byId(id);
+        Customer c = (Customer)User.getUserById(session().get("email"));
+        Form<Booking> newBookingForm = formFactory.form(Booking.class).bindFromRequest();
+        if(newBookingForm.hasErrors()) {
+            //Display the form again
+            return badRequest(booking.render(newBookingForm, User.getUserById(session().get("email")), f));
+        }
+        Booking newBooking = new Booking(c, f, newBookingForm.get().getNoOfTickets(), newBookingForm.get().getFirstname(), newBookingForm.get().getLastname(), newBookingForm.get().getTicketClass());
+        newBooking.save();
+        addToBasket(newBooking.getId());
+        flash("success");
+        return redirect(controllers.routes.ShoppingController.showBasket());
+    }
+
 
 }

@@ -14,13 +14,15 @@
         <thead>
             <!-- The header row-->
           <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <th>Ticket ID</th>
+            <th>Customer Name</th>
+            <th>Destination</th>
+            <th>Flight Class</th>
+            <th>Number of Tickets</th>
             <th>Item Price</th>
             <th>Total</th>
-            <th>Quantity</th>
-            <th>dec.</th>
-            <th>inc.</th>
+            <th>Add Ticket</th>
+            <th>Reduce Ticket</th>
           </tr>
         </thead>
         <tbody>
@@ -28,15 +30,19 @@
             <!-- Start of For loop - For each p in products add a row -->
           @for(i <- customer.getBasket().getBasketItems()) {
             <tr>
-              <td>@i.getFlight.getFlight_id</td>
-              <td>@i.getFlight.getDestination -> @i.getFlight.getDest_city</td>
+              <td>@i.getTicket.getId</td>
+              <td>@i.getTicket.getFirstname @i.getTicket.getLastname</td>
+              <td>@i.getTicket.getFlight.getDestination  ----->  @i.getTicket.getFlight.getDest_city</td>
+              <td>@i.getTicket.getTicketClass</td>
+              <td>@i.getNoOfTickets</td>
               <td>&euro; @("%.2f".format(i.getPrice))</td>
               <td>&euro; @("%.2f".format(i.getItemTotal))</td>
-              <td>@i.getQuantity()</td>
               <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
               <td><a href="@routes.ShoppingController.addOne(i.getId)"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
               <td><a href="@routes.ShoppingController.cancelBooking(i.getId)" class="btn btn-danger btn-sm" onclick="return confirmDel();">
                 <span class="glyphicon glyphicon-trash"></span>Cancel Booking</a><td>
+              <td><a href="/" class="btn btn-success btn-sm">
+                <span class="glyphicon glyphicon-euro"></span> Pay</a></td>
             </tr>
           }<!-- End of For loop -->
         }

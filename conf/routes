@@ -20,6 +20,10 @@ GET     /addOne/:itemId             controllers.ShoppingController.addOne(itemId
 GET     /removeOne/:itemId          controllers.ShoppingController.removeOne(itemId: Long)
 GET     /emptyBasket                controllers.ShoppingController.emptyBasket()
 GET     /placeOrder                 controllers.ShoppingController.placeOrder()
+
+# Booking
+GET     /addBooking                 controllers.ShoppingController.addBooking(id: Long)
+POST    /bookingSubmit              controllers.ShoppingController.addBookingForm(id: Long)
 GET     /cancelBooking              controllers.ShoppingController.cancelBooking(id: Long)
 
 # Ticket

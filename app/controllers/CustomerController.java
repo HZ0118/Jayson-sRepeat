@@ -1,5 +1,7 @@
 package controllers;
 
+import controllers.*;
+import models.users.Customer;
 import models.users.User;
 import play.mvc.*;
 import play.api.Environment;
@@ -34,5 +36,7 @@ public class CustomerController extends Controller {
         List<FlightSchedule> flightsList = FlightSchedule.findAll();
         return ok(customerViewFlights.render(flightsList, User.getUserById(session().get("email"))));
     }
+
+
 
 }

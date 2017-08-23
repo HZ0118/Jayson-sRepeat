@@ -1,0 +1,29 @@
+@(bookingForm: Form[models.Booking], user: models.users.User, flight: models.FlightSchedule)
+@import helper._
+
+@main("Book Flight", user){
+
+  <h3>Book A Flight</h3>
+
+  @if(bookingForm.hasGlobalErrors) {
+    <p class="alert alert-warning">
+    @bookingForm.globalError.message
+    </p>
+  }
+
+  @form(action = routes.ShoppingController.addBookingForm(flight.getFlight_id),'class -> "form-horizontal", 'role->"form"){
+    @inputText(bookingForm("firstname"), '_label -> "First Name",'class -> "form-control")
+    @inputText(bookingForm("lastname"), '_label -> "Last Name",'class -> "form-control")
+    @inputText(bookingForm("ticketClass"), '_label -> "Ticket Class",'class -> "form-control")
+    @inputText(bookingForm("noOfTickets"), '_label -> "Number Of Tickets",'class -> "form-control")
+
+    <div class="action">
+      <input type="submit" value="Add Booking" class="btn btn-primary">
+      <button type="cancel" class="btn btn-primary" onclick="window.location='@routes.CustomerController.flights()';return false;">Cancel</button>
+
+
+    </div>
+
+
+  }
+}

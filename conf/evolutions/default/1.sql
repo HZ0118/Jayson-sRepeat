@@ -11,6 +11,19 @@ create table basket (
 );
 create sequence basket_seq;
 
+create table booking (
+  id                            bigint not null,
+  customer_email                varchar(255),
+  flight_flight_id              bigint,
+  firstname                     varchar(255),
+  lastname                      varchar(255),
+  ticket_class                  varchar(255),
+  no_of_tickets                 integer,
+  price                         double,
+  constraint pk_booking primary key (id)
+);
+create sequence booking_seq;
+
 create table flight_schedule (
   flight_id                     bigint not null,
   destination                   varchar(255),
@@ -27,9 +40,9 @@ create table order_item (
   id                            bigint not null,
   order_id                      bigint,
   basket_id                     bigint,
-  flight_flight_id              bigint,
-  quantity                      integer,
+  ticket_id                     bigint,
   price                         double,
+  no_of_tickets                 integer,
   constraint pk_order_item primary key (id)
 );
 create sequence order_item_seq;
@@ -57,14 +70,20 @@ create table user (
 
 alter table basket add constraint fk_basket_customer_email foreign key (customer_email) references user (email) on delete restrict on update restrict;
 
+alter table booking add constraint fk_booking_customer_email foreign key (customer_email) references user (email) on delete restrict on update restrict;
+create index ix_booking_customer_email on booking (customer_email);
+
+alter table booking add constraint fk_booking_flight_flight_id foreign key (flight_flight_id) references flight_schedule (flight_id) on delete restrict on update restrict;
+create index ix_booking_flight_flight_id on booking (flight_flight_id);
+
 alter table order_item add constraint fk_order_item_order_id foreign key (order_id) references shop_order (id) on delete restrict on update restrict;
 create index ix_order_item_order_id on order_item (order_id);
 
 alter table order_item add constraint fk_order_item_basket_id foreign key (basket_id) references basket (id) on delete restrict on update restrict;
 create index ix_order_item_basket_id on order_item (basket_id);
 
-alter table order_item add constraint fk_order_item_flight_flight_id foreign key (flight_flight_id) references flight_schedule (flight_id) on delete restrict on update restrict;
-create index ix_order_item_flight_flight_id on order_item (flight_flight_id);
+alter table order_item add constraint fk_order_item_ticket_id foreign key (ticket_id) references booking (id) on delete restrict on update restrict;
+create index ix_order_item_ticket_id on order_item (ticket_id);
 
 alter table shop_order add constraint fk_shop_order_customer_email foreign key (customer_email) references user (email) on delete restrict on update restrict;
 create index ix_shop_order_customer_email on shop_order (customer_email);
@@ -74,20 +93,29 @@ create index ix_shop_order_customer_email on shop_order (customer_email);
 
 alter table basket drop constraint if exists fk_basket_customer_email;
 
+alter table booking drop constraint if exists fk_booking_customer_email;
+drop index if exists ix_booking_customer_email;
+
+alter table booking drop constraint if exists fk_booking_flight_flight_id;
+drop index if exists ix_booking_flight_flight_id;
+
 alter table order_item drop constraint if exists fk_order_item_order_id;
 drop index if exists ix_order_item_order_id;
 
 alter table order_item drop constraint if exists fk_order_item_basket_id;
 drop index if exists ix_order_item_basket_id;
 
-alter table order_item drop constraint if exists fk_order_item_flight_flight_id;
-drop index if exists ix_order_item_flight_flight_id;
+alter table order_item drop constraint if exists fk_order_item_ticket_id;
+drop index if exists ix_order_item_ticket_id;
 
 alter table shop_order drop constraint if exists fk_shop_order_customer_email;
 drop index if exists ix_shop_order_customer_email;
 
 drop table if exists basket;
 drop sequence if exists basket_seq;
+
+drop table if exists booking;
+drop sequence if exists booking_seq;
 
 drop table if exists flight_schedule;
 drop sequence if exists flight_schedule_seq;

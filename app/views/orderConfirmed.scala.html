@@ -25,8 +25,8 @@
             <!-- Start of For loop - For each p in products add a row -->
           @for(i <- order.getItems) {
             <tr>
-              <td>@i.getFlight.getDestination -> @i.getFlight.getDest_city</td>
-              <td>@i.getFlight.getDestination</td>
+              <td>@i.getTicket.getFlight.getDestination -> @i.getTicket.getFlight.getDest_city</td>
+              <td>@i.getTicket.getFlight.getDeparture_date</td>
               <td>&euro; @("%.2f".format(i.getPrice))</td>
               <td>@i.getQuantity()</td>
               <td>&euro; @("%.2f".format(i.getItemTotal))</td>

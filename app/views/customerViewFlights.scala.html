@@ -26,7 +26,7 @@
                 <td class="numeric">@f.getSeats</td>
                 <td class="numeric">&euro; @("%.2f".format(f.getPrice))</td>
                 <td>
-                    <a href="/">
+                    <a href="@routes.ShoppingController.addBooking(f.getFlight_id)">
                         <button class="btn btn-primary">Book Flight</button>
                     </a>
                 </td>

@@ -3,13 +3,9 @@ package models.shopping;
 import java.util.*;
 import javax.persistence.*;
 
-import play.data.format.*;
-import play.data.validation.*;
-
 import com.avaje.ebean.*;
 
 import models.*;
-import models.users.*;
 
 // OrderItem entity managed by Ebean
 @Entity
@@ -25,34 +21,32 @@ public class OrderItem extends Model {
     private Basket basket;
 
     @ManyToOne
-    private FlightSchedule flight;
-
-    private int quantity;
+    private Booking ticket;
     private double price;
-
+    private int noOfTickets;
     // Default constructor
     public  OrderItem() {
     }
 
-    public OrderItem(FlightSchedule f) {
-        flight = f;
-        quantity = 1;
-        price = f.getPrice();
+    public OrderItem(Booking t) {
+        ticket = t;
+        price = t.getPrice();
+        this.noOfTickets= t.getNoOfTickets();
     }
 
     // Increment quantity
     public void increaseQty() {
-        quantity += 1;
+        setNoOfTickets(ticket.getNoOfTickets() + 1);
     }
 
     // Decrement quantity
     public void decreaseQty() {
-        quantity -= 1;
+        setNoOfTickets(ticket.getNoOfTickets() - 1);
     }
 
     // Calculate and return total price for this order item
     public double getItemTotal() {
-        return this.price * this.quantity;
+        return this.price * noOfTickets;
     }
 
     //Generic query helper
@@ -87,20 +81,20 @@ public class OrderItem extends Model {
         this.basket = basket;
     }
 
-    public FlightSchedule getFlight() {
-        return flight;
+    public Booking getTicket() {
+        return ticket;
     }
 
-    public void setFlight(FlightSchedule flight) {
-        this.flight = flight;
+    public void setTicket(Booking ticket) {
+        this.ticket = ticket;
     }
 
     public int getQuantity() {
-        return quantity;
+        return noOfTickets;
     }
 
     public void setQuantity(int quantity) {
-        this.quantity = quantity;
+        this.noOfTickets = quantity;
     }
 
     public double getPrice() {
@@ -112,5 +106,12 @@ public class OrderItem extends Model {
     }
 
 
+    public int getNoOfTickets() {
+        return noOfTickets;
+    }
+
+    public void setNoOfTickets(int noOfTickets) {
+        this.noOfTickets = noOfTickets;
+    }
 }
 
