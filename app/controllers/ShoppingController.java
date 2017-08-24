@@ -145,5 +145,21 @@ public class ShoppingController extends Controller {
         return redirect(controllers.routes.ShoppingController.showBasket());
     }
 
+    public Result pay(Long id){
+        Booking b = Booking.find.byId(id);
+        Form<Payment> paymentForm = formFactory.form(Payment.class);
+        return ok(payment.render(paymentForm, User.getUserById(session().get("email")), b));
+    }
+
+    public Result addPaymentForm(Long id){
+        Booking b = Booking.find.byId(id);
+        Form<Payment> newPaymentForm = formFactory.form(Payment.class).bindFromRequest();
+        if(newPaymentForm.hasErrors()){
+            return badRequest(payment.render(newPaymentForm, User.getUserById(session().get("email")), b));
+        }
+        Payment newPayment = new Payment(b, newPaymentForm.get().getCardHolderName(), newPaymentForm.get().getCardNumber(), newPaymentForm.get().getCardNumber());
+        newPayment.save();
+        return redirect(controllers.routes.ShoppingController.placeOrder());
+    }
 
 }

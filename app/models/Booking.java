@@ -14,6 +14,8 @@ public class Booking extends Model{
     private Customer customer;
     @ManyToOne
     private FlightSchedule flight;
+    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
+    private Payment bookingStatus;
 
     private String firstname;
     private String lastname;
@@ -102,5 +104,13 @@ public class Booking extends Model{
 
     public void setPrice(double price) {
         this.price = flight.getPrice();
+    }
+
+    public Payment getBookingStatus() {
+        return bookingStatus;
+    }
+
+    public void setBookingStatus(Payment bookingStatus) {
+        this.bookingStatus = bookingStatus;
     }
 }

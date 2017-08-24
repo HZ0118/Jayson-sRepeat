@@ -26,6 +26,10 @@ GET     /addBooking                 controllers.ShoppingController.addBooking(id
 POST    /bookingSubmit              controllers.ShoppingController.addBookingForm(id: Long)
 GET     /cancelBooking              controllers.ShoppingController.cancelBooking(id: Long)
 
+# Payment
+GET     /pay                        controllers.ShoppingController.pay(id: Long)
+POST    /paymentSubmit              controllers.ShoppingController.addPaymentForm(id: Long)
+
 # Ticket
 
 # An example controller showing how to use dependency injection

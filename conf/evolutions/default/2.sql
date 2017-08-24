@@ -12,4 +12,4 @@ insert into flight_schedule (flight_id, destination, dest_city, start, departure
 insert into flight_schedule (flight_id, destination, dest_city, start, departure_date, seats, price) values (7, 'Spain', 'Barcelona', 'Dublin', '02/11/2017', 350, 450);
 insert into flight_schedule (flight_id, destination, dest_city, start, departure_date, seats, price) values (8, 'Japan', 'Tokyo', 'Dublin', '27/10/2017', 500, 680);
 
-insert into basket (id, email) values ('2', 'customer');
+insert into basket (id, customer) values ('1', 'customer');

@@ -25,16 +25,7 @@
                 <td>@f.getDeparture_date</td>
                 <td class="numeric">@f.getSeats</td>
                 <td class="numeric">&euro; @("%.2f".format(f.getPrice))</td>
-                <td>
-                    <a href="@routes.ShoppingController.addBooking(f.getFlight_id)">
-                        <button class="btn btn-primary">Book Flight</button>
-                    </a>
-                </td>
-                <td>
-                    <a href="@routes.ShoppingController.addToBasket(f.getFlight_id)"  class="btn btn-default btn-xs">
-                        <span class="glyphicon glyphicon-shopping-cart"></span>
-                    </a>
-                </td>
+                <td><a href="@routes.ShoppingController.addBooking(f.getFlight_id)"><button class="btn btn-primary">Book Flight</button></a></td>
             </tr>
         }
         </tbody>

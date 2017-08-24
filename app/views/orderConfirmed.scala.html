@@ -13,11 +13,14 @@
         <thead>
             <!-- The header row-->
           <tr>
-            <th>Name</th>
-            <th>Description</th>
+            <th>Ticket ID</th>
+            <th>Customer Name</th>
+            <th>Destination</th>
+            <th>Flight Class</th>
+            <th>Number of Tickets</th>
             <th>Item Price</th>
-            <th>Quantity</th>
             <th>Total</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
@@ -25,11 +28,14 @@
             <!-- Start of For loop - For each p in products add a row -->
           @for(i <- order.getItems) {
             <tr>
-              <td>@i.getTicket.getFlight.getDestination -> @i.getTicket.getFlight.getDest_city</td>
-              <td>@i.getTicket.getFlight.getDeparture_date</td>
+              <td>@i.getTicket.getId</td>
+              <td>@i.getTicket.getFirstname @i.getTicket.getLastname</td>
+              <td>@i.getTicket.getFlight.getDestination  ----->  @i.getTicket.getFlight.getDest_city</td>
+              <td>@i.getTicket.getTicketClass</td>
+              <td>@i.getNoOfTickets</td>
               <td>&euro; @("%.2f".format(i.getPrice))</td>
-              <td>@i.getQuantity()</td>
               <td>&euro; @("%.2f".format(i.getItemTotal))</td>
+              <td>Paid</td>
             </tr>
           }<!-- End of For loop -->
         }

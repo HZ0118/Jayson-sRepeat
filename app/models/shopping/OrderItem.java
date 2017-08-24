@@ -36,12 +36,12 @@ public class OrderItem extends Model {
 
     // Increment quantity
     public void increaseQty() {
-        setNoOfTickets(ticket.getNoOfTickets() + 1);
+        setNoOfTickets(noOfTickets + 1);
     }
 
     // Decrement quantity
     public void decreaseQty() {
-        setNoOfTickets(ticket.getNoOfTickets() - 1);
+        setNoOfTickets(noOfTickets - 1);
     }
 
     // Calculate and return total price for this order item
@@ -104,7 +104,6 @@ public class OrderItem extends Model {
     public void setPrice(double price) {
         this.price = price;
     }
-
 
     public int getNoOfTickets() {
         return noOfTickets;

@@ -21,8 +21,10 @@
             <th>Number of Tickets</th>
             <th>Item Price</th>
             <th>Total</th>
-            <th>Add Ticket</th>
             <th>Reduce Ticket</th>
+            <th>Add Ticket</th>
+            <th>Payment</th>
+            <th>Cancel</th>
           </tr>
         </thead>
         <tbody>
@@ -39,10 +41,8 @@
               <td>&euro; @("%.2f".format(i.getItemTotal))</td>
               <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span class="glyphicon glyphicon-minus-sign"></span></a></td>
               <td><a href="@routes.ShoppingController.addOne(i.getId)"><span class="glyphicon glyphicon-plus-sign"></span></a></td>
-              <td><a href="@routes.ShoppingController.cancelBooking(i.getId)" class="btn btn-danger btn-sm" onclick="return confirmDel();">
-                <span class="glyphicon glyphicon-trash"></span>Cancel Booking</a><td>
-              <td><a href="/" class="btn btn-success btn-sm">
-                <span class="glyphicon glyphicon-euro"></span> Pay</a></td>
+              <td><a href="@routes.ShoppingController.pay(i.getTicket.getId)" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-euro"></span>Pay</a></td>
+              <td><a href="@routes.ShoppingController.cancelBooking(i.getId)" class="btn btn-danger btn-sm" onclick="return confirmDel();"><span class="glyphicon glyphicon-trash"></span>Cancel Booking</a><td>
             </tr>
           }<!-- End of For loop -->
         }
@@ -58,12 +58,6 @@
           <p class="text-right">
             <a href="@routes.ShoppingController.emptyBasket()" class="btn btn-danger btn-sm" onclick="return confirmDel();">
               <span class="glyphicon glyphicon-trash"></span> Empty Basket</a>
-          </p>
-        </div>
-        <div class="col-md-6">
-          <p class="text-right">
-            <a href="@routes.ShoppingController.placeOrder()" class="btn btn-success btn-sm">
-              <span class="glyphicon glyphicon-euro"></span> Place Order</a>
           </p>
         </div>
       </div>

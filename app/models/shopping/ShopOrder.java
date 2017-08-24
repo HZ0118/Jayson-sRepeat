@@ -98,7 +98,7 @@ public class ShopOrder extends Model {
         ArrayList<String> quantity = new ArrayList<>();
         for(int i = 0; i< items.size(); i++) {
             OrderItem o = items.get(i);
-            quantity.add(i, String.valueOf(o.getNoOfTickets()));
+            quantity.add(i, String.valueOf(o.getQuantity()));
 
         }
 

@@ -47,6 +47,18 @@ create table order_item (
 );
 create sequence order_item_seq;
 
+create table payment (
+  id                            bigint not null,
+  ticket_id                     bigint,
+  card_holder_name              varchar(255),
+  card_number                   varchar(255),
+  security_number               varchar(255),
+  status                        boolean,
+  constraint uq_payment_ticket_id unique (ticket_id),
+  constraint pk_payment primary key (id)
+);
+create sequence payment_seq;
+
 create table shop_order (
   id                            bigint not null,
   order_date                    timestamp,
@@ -85,6 +97,8 @@ create index ix_order_item_basket_id on order_item (basket_id);
 alter table order_item add constraint fk_order_item_ticket_id foreign key (ticket_id) references booking (id) on delete restrict on update restrict;
 create index ix_order_item_ticket_id on order_item (ticket_id);
 
+alter table payment add constraint fk_payment_ticket_id foreign key (ticket_id) references booking (id) on delete restrict on update restrict;
+
 alter table shop_order add constraint fk_shop_order_customer_email foreign key (customer_email) references user (email) on delete restrict on update restrict;
 create index ix_shop_order_customer_email on shop_order (customer_email);
 
@@ -108,6 +122,8 @@ drop index if exists ix_order_item_basket_id;
 alter table order_item drop constraint if exists fk_order_item_ticket_id;
 drop index if exists ix_order_item_ticket_id;
 
+alter table payment drop constraint if exists fk_payment_ticket_id;
+
 alter table shop_order drop constraint if exists fk_shop_order_customer_email;
 drop index if exists ix_shop_order_customer_email;
 
@@ -122,6 +138,9 @@ drop sequence if exists flight_schedule_seq;
 
 drop table if exists order_item;
 drop sequence if exists order_item_seq;
+
+drop table if exists payment;
+drop sequence if exists payment_seq;
 
 drop table if exists shop_order;
 drop sequence if exists shop_order_seq;

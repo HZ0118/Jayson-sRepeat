@@ -1,0 +1,24 @@
+@(paymentForm: Form[models.Payment], user: models.users.User, ticket: models.Booking)
+@import helper._
+
+@main("Payment", user){
+
+  <h3>Payment Details</h3>
+
+  @if(paymentForm.hasGlobalErrors) {
+    <p class="alert alert-warning">
+    @paymentForm.globalError.message
+    </p>
+  }
+
+  @form(action = routes.ShoppingController.addPaymentForm(ticket.getId),'class -> "form-horizontal", 'role->"form"){
+    @inputText(paymentForm("cardHolderName"), '_label -> "Card Holder's Name",'class -> "form-control")
+    @inputText(paymentForm("cardNumber"), '_label -> "Credit Card Number",'class -> "form-control")
+    @inputText(paymentForm("securityNumber"), '_label -> "Security Number",'class -> "form-control")
+
+    <div class="action">
+      <input type="submit" value="Add Booking" class="btn btn-primary">
+      <button type="cancel" class="btn btn-primary" onclick="window.location='@routes.ShoppingController.placeOrder()';return false;">Cancel</button>
+    </div>
+  }
+}
