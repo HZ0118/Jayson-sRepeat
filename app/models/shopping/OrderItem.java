@@ -24,6 +24,7 @@ public class OrderItem extends Model {
     private Booking ticket;
     private double price;
     private int noOfTickets;
+    private int seats;
     // Default constructor
     public  OrderItem() {
     }
@@ -32,16 +33,22 @@ public class OrderItem extends Model {
         ticket = t;
         price = t.getPrice();
         this.noOfTickets= t.getNoOfTickets();
+        setSeats(t.getSeatCount());
     }
 
     // Increment quantity
     public void increaseQty() {
         setNoOfTickets(noOfTickets + 1);
+        this.seats -= 1;
+        ticket.setSeatCount(ticket.getId(), seats);
+
     }
 
     // Decrement quantity
     public void decreaseQty() {
         setNoOfTickets(noOfTickets - 1);
+        this.seats += 1;
+        ticket.setSeatCount(ticket.getId(), seats);
     }
 
     // Calculate and return total price for this order item
@@ -111,6 +118,14 @@ public class OrderItem extends Model {
 
     public void setNoOfTickets(int noOfTickets) {
         this.noOfTickets = noOfTickets;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
     }
 }
 

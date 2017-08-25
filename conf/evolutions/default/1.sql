@@ -20,6 +20,7 @@ create table booking (
   ticket_class                  varchar(255),
   no_of_tickets                 integer,
   price                         double,
+  seat_count                    integer,
   constraint pk_booking primary key (id)
 );
 create sequence booking_seq;
@@ -43,6 +44,7 @@ create table order_item (
   ticket_id                     bigint,
   price                         double,
   no_of_tickets                 integer,
+  seats                         integer,
   constraint pk_order_item primary key (id)
 );
 create sequence order_item_seq;
@@ -72,6 +74,7 @@ create table user (
   email                         varchar(255) not null,
   name                          varchar(255),
   password                      varchar(255),
+  confirm_password              varchar(255),
   street1                       varchar(255),
   street2                       varchar(255),
   town                          varchar(255),

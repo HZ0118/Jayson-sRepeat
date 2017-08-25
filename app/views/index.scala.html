@@ -1,17 +1,32 @@
-@(user: models.users.User)
-
+@(addUserForm: Form[models.users.User], user: models.users.User)
+@import helper._
 @main("Home", user) {
-    <div class="row">
-        <div class="col-sm-2">
-            <div class="well">
-                <h4>Menu</h4>
+
+    <div id="intro">
+        <h1>The Sky is Waiting for You</h1>
+        <p>With Airways Company, you can find the cheapest flights you need and travel safely </p>
+        <p>We provide convenient and fast search for airline tickets, plus reliable ticket booking system, perfect for first-time travellers.</p>
+        <a href="@routes.HomeController.flights()"><button type="button" class="btn btn-primary">Find Tickets</button></a>
+    </div>
+
+    <div class="signup">
+        <h2>Sign up now</h2>
+        @if(addUserForm.hasGlobalErrors){
+            <p class="alert alert-warning">
+            @addUserForm.globalError.message
+            </p>
+        }
+        @form(action = routes.HomeController.signUpSubmit(), 'class -> "form-horizontal", 'role -> "form"){
+            @inputText(addUserForm("email"), '_label -> "Email",'class -> "form-control")
+            @inputText(addUserForm("name"), '_label -> "Name",'class -> "form-control")
+            @inputPassword(addUserForm("password"), '_label -> "Password",'class -> "form-control")
+            @inputPassword(addUserForm("confirmPassword"), '_label -> "Confirm Password",'class -> "form-control")
+
+            <div class="action">
+                <input type="submit" value="Sign Up" class="btn btn-primary">
+                <button type="cancel" class="btn btn-primary" onclick="window.location='@routes.HomeController.index()';return false;">Cancel</button>
             </div>
-        </div>
-        <div class="col-sm-10">
-            <div class="well">
-                <h4></h4>
-            </div>
-        </div>
+        }
     </div>
 
 }

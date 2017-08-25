@@ -28,10 +28,6 @@ public class CustomerController extends Controller {
         return User.getUserById(session().get("email"));
     }
 
-    public Result index() {
-        return ok(index.render(getUserFromSession()));
-    }
-
     public Result flights(){
         List<FlightSchedule> flightsList = FlightSchedule.findAll();
         return ok(customerViewFlights.render(flightsList, User.getUserById(session().get("email"))));

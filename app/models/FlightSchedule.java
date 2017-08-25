@@ -26,7 +26,6 @@ public class FlightSchedule extends Model{
     private double price;
 
     public FlightSchedule(){
-
     }
 
     public FlightSchedule(Long id, String dest, String city, String startPoint, String date, int seats, double cost){
@@ -100,4 +99,11 @@ public class FlightSchedule extends Model{
     public void setPrice(double price) {
         this.price = price;
     }
+
+    public int updateSeats(Long id, int seats){
+        FlightSchedule f = FlightSchedule.find.byId(id);
+        f.seats = seats;
+        return seats;
+    }
+
 }

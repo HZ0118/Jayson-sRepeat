@@ -58,6 +58,12 @@ public class ShoppingController extends Controller {
 
     @Transactional
     public Result showBasket(){
+        Customer customer = (Customer)User.getUserById(session().get("email"));
+        if(customer.getBasket() == null){
+            customer.setBasket(new Basket());
+            customer.getBasket().setCustomer(customer);
+            customer.update();
+        }
         return ok(basket.render(getCurrentUser()));
     }
 

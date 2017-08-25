@@ -19,6 +19,7 @@
             <th>Destination</th>
             <th>Flight Class</th>
             <th>Number of Tickets</th>
+            <th>Seats Available</th>
             <th>Item Price</th>
             <th>Total</th>
             <th>Reduce Ticket</th>
@@ -37,6 +38,7 @@
               <td>@i.getTicket.getFlight.getDestination  ----->  @i.getTicket.getFlight.getDest_city</td>
               <td>@i.getTicket.getTicketClass</td>
               <td>@i.getNoOfTickets</td>
+              <td>@i.getSeats</td>
               <td>&euro; @("%.2f".format(i.getPrice))</td>
               <td>&euro; @("%.2f".format(i.getItemTotal))</td>
               <td><a href="@routes.ShoppingController.removeOne(i.getId)"><span class="glyphicon glyphicon-minus-sign"></span></a></td>

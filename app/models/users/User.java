@@ -24,6 +24,28 @@ public class User extends Model{
     private String name;
     @Constraints.Required
     private String password;
+    @Constraints.Required
+    private String confirmPassword;
+
+    public String validate() {
+
+        if(!getEmail().contains("@")){
+            return "Invalid email address";
+
+        }
+
+        if (User.authenticate(getEmail(), getName()) != null) {
+
+            return "Account already exist";
+        }
+
+        if(!getPassword().equals(getConfirmPassword())) {
+            return "Password mismatch";
+        }
+
+        return null;
+
+    }
 
     public User(){
         this.role = "customer";
@@ -88,4 +110,11 @@ public class User extends Model{
     }
 
 
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
 }

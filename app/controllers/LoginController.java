@@ -37,13 +37,7 @@ public class LoginController extends Controller {
             session().clear();
             session("email", loginForm.get().getEmail());
         }
-        User u = User.getUserById(session().get("email"));
-        if (u.getRole().equals("customer")) {
-            return redirect(controllers.routes.CustomerController.index());
-        }
-        else{
-            return redirect(controllers.routes.HomeController.index());
-        }
+        return redirect(controllers.routes.HomeController.index());
     }
 
     public Result logout(){

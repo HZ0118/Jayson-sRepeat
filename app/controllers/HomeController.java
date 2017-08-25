@@ -27,12 +27,24 @@ public class HomeController extends Controller {
     }
 
     public Result index() {
-        return ok(index.render(getUserFromSession()));
+        Form<User> addUserForm = formFactory.form(User.class);
+        return ok(index.render(addUserForm,getUserFromSession()));
     }
 
     public Result flights(){
         List<FlightSchedule> flightsList = FlightSchedule.findAll();
         return ok(userViewFlights.render(flightsList, User.getUserById(session().get("email"))));
+    }
+
+    public Result signUpSubmit(){
+        Form<User> newRegisterForm = formFactory.form(User.class).bindFromRequest();
+        if(newRegisterForm.hasErrors()){
+            return badRequest(index.render(newRegisterForm, User.getUserById(session().get("email"))));
+        }
+        User newUser = newRegisterForm.get();
+        newUser.save();
+        flash("success", "User " + newUser.getName() + " has been created");
+        return redirect(controllers.routes.LoginController.login());
     }
 
 }

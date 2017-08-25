@@ -22,8 +22,10 @@ public class Booking extends Model{
     private String ticketClass;
     private int noOfTickets;
     private double price;
+    private int seatCount;
 
     public Booking(){
+        noOfTickets = 1;
     }
 
     public Booking(Customer c,FlightSchedule f,int noOfTickets, String fname, String lname, String tClass){
@@ -34,6 +36,7 @@ public class Booking extends Model{
         setLastname(lname);
         setTicketClass(tClass);
         this.price = f.getPrice();
+        seatCount = f.getSeats() - noOfTickets;
     }
 
     public static Finder<Long,Booking> find = new Finder<Long,Booking>(Booking.class);
@@ -112,5 +115,15 @@ public class Booking extends Model{
 
     public void setBookingStatus(Payment bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public int getSeatCount() {
+        return seatCount;
+    }
+
+    public void setSeatCount(Long id, int seats) {
+        Booking b = Booking.find.byId(id);
+        b.seatCount = seats;
+        flight.updateSeats(b.getFlight().getFlight_id(), this.seatCount);
     }
 }

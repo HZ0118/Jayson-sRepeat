@@ -6,12 +6,15 @@
 GET     /                           controllers.HomeController.index
 GET     /flights                    controllers.HomeController.flights
 
-GET     /customer                   controllers.CustomerController.index
 GET     /customer/flights           controllers.CustomerController.flights
 # Login
 GET     /login                      controllers.LoginController.login
 POST    /loginSubmit                controllers.LoginController.loginSubmit
 GET     /logout                     controllers.LoginController.logout
+
+# Sign Up
+GET     /signup                     controllers.HomeController.index
+POST    /signupSubmit               controllers.HomeController.signUpSubmit
 
 # Shopping
 GET     /showBasket                 controllers.ShoppingController.showBasket()
